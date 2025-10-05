@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MordenSite - Acesso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f7f9fb;
+        }
+        .card-container {
+            max-width: 1200px;
+        }
+        input:focus {
+            /* Alterado para Pink-500 (#ec4899) */
+            border-color: #ec4899 !important;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.5);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container w-full p-4 md:p-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Bem-vindo ao MordenSite</h1>
+        
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Card de Cadastro (Mockup) -->
+            <div class="flex-1 p-6 sm:p-8 bg-white border border-gray-200 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-3">Seção de Cadastro</h2>
+                <p class="text-gray-600 mb-4">Esta área é dedicada à criação de uma nova conta no MordenSite. Preencha seus dados e comece a explorar!</p>
+                
+                <form class="space-y-4">
+                    <input type="text" placeholder="Nome Completo" class="w-full p-3 border border-gray-300 rounded-lg transition duration-150">
+                    <input type="email" placeholder="Seu Melhor E-mail" class="w-full p-3 border border-gray-300 rounded-lg transition duration-150">
+                    <input type="password" placeholder="Crie uma Senha" class="w-full p-3 border border-gray-300 rounded-lg transition duration-150">
+                    <button type="submit" class="w-full py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 transition duration-300 shadow-md hover:shadow-lg">
+                        Cadastrar
+                    </button>
+                </form>
+                
+            </div>
+
+            <!-- Card de Login (Foco do Trabalho) -->
+            <div class="flex-1 p-6 sm:p-8 bg-white border border-gray-200 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-3">Acesso Rápido (Login)</h2>
+                
+                <form id="loginForm" class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                        <input type="email" id="email" required 
+                               placeholder="exemplo@dominio.com"
+                               class="w-full p-3 border border-gray-300 rounded-lg transition duration-150">
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Senha (min. 6 caracteres)</label>
+                        <input type="password" id="password" required 
+                               placeholder="••••••••"
+                               class="w-full p-3 border border-gray-300 rounded-lg transition duration-150">
+                    </div>
+
+                    <p id="message" class="text-sm pt-2 text-center hidden"></p>
+                    
+                    <button type="submit" id="loginButton"
+                            class="w-full py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 transition duration-300 shadow-lg transform hover:scale-[1.01] active:scale-[0.99]">
+                        Logar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const messageDisplay = document.getElementById('message');
+        
+        const showMessage = (text, isError = true) => {
+            messageDisplay.textContent = text;
+            messageDisplay.className = 'text-sm pt-2 text-center';
+            if (isError) {
+                messageDisplay.classList.add('text-red-500');
+            } else {
+                messageDisplay.classList.add('text-green-500');
+            }
+            messageDisplay.classList.remove('hidden');
+        };
+
+        const validateEmail = (email) => {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        };
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            messageDisplay.classList.add('hidden');
+            
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            
+            if (!validateEmail(email)) {
+                showMessage('Erro: O e-mail não está no formato correto. Ex: usuario@dominio.com');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('Erro: A senha deve ter no mínimo 6 caracteres.');
+                return;
+            }
+
+            console.log('--- Dados de Login Enviados ---');
+            console.log('E-mail:', email);
+            console.log('Senha:', password);
+            console.log('------------------------------');
+
+            showMessage('Login efetuado com sucesso! Verifique o console do navegador.', false);
+            
+            form.reset();
+        });
+    </script>
+</body>
+</html>
